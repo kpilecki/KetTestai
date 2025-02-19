@@ -1,6 +1,5 @@
 package com.kp.kettestai.questionScreen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -9,49 +8,34 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxColors
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Shapes
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.kp.kettestai.ui.theme.KetTestaiTheme
 
 @Composable
-fun Question(){
-    val question : String = "Kodėl pravažiavęs (-usi) posūkį turite įsitikinti, kad posūkio signalas išjungtas?"
-    val answers : List<String> = listOf(
-        "Kad negadinčiau posūkio indikatoriaus perjungiklio (rėlės)",
-        "Kad neklaidinčiau kitų eismo dalyvių",
-        "Kad neakinčiau kitų eismo dalyvių",
-        "Kad nesekinčiau akumuliatoriaus"
-        )
+fun QuestionScreen(question: Question){
     Column {
         Row(modifier = Modifier
             .weight(1f, fill = true)
             .background(color = MaterialTheme.colorScheme.surfaceContainer)
         ) {
-            Text(text = question, textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurface)
+            Text(text = question.questionText, textAlign = TextAlign.Center, color = MaterialTheme.colorScheme.onSurface)
         }
         HorizontalDivider(color = Color.Gray)
         Column {
-            answers.forEach({ QuestionAnswer(it) })
+            question.answers.forEach({ QuestionAnswer(it.answerText) })
         }
     }
 
@@ -87,6 +71,14 @@ fun QuestionAnswer(answerText : String = ""){
 @Composable
 fun QuestionPreview(){
     KetTestaiTheme {
-        Question()
+        QuestionScreen(Question(
+            questionText = "Kodėl pravažiavęs (-usi) posūkį turite įsitikinti, kad posūkio signalas išjungtas?",
+            answers = listOf(
+            Answer("Kad negadinčiau posūkio indikatoriaus perjungiklio (rėlės)", false),
+            Answer("Kad neklaidinčiau kitų eismo dalyvių", false),
+            Answer("Kad neakinčiau kitų eismo dalyvių", false),
+            Answer("Kad nesekinčiau akumuliatoriaus", true)),
+            image = ""
+        ))
     }
 }
